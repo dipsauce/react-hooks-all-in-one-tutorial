@@ -2,26 +2,29 @@ import React, { useEffect, useMemo, useState, useContext } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { getDate } from "./utils";
 
-type ClockContextType = { date: string };
-const ClockContext = React.createContext<ClockContextType>({
-  date: getDate(),
-});
+type ClockContextType = { date?: string };
+const ClockContext = React.createContext<ClockContextType>({});
+function useClock() {
+  return useContext(ClockContext);
+}
 function ClockProvider({ children }: any) {
-  const [state, setState] = useState<ClockContextType>({
-    date: getDate(),
+  const [date, setDate] = useState<string>(getDate());
+  const [state, setState] = useState({
+    date,
   });
+
+  console.log("clockProvider", state);
+
   useEffect(() => {
     let intervalId = setInterval(() => {
-      setState({ ...state, date: getDate() });
+      setState({ date: getDate() });
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
+
   return (
     <ClockContext.Provider value={state}>{children}</ClockContext.Provider>
   );
-}
-function useClock() {
-  return useContext(ClockContext);
 }
 
 const Center = styled.div({
@@ -32,8 +35,8 @@ export function Effect() {
   const [animals, setAnimals] = useState(0);
   const state = useClock();
 
+  console.log("state", state);
   const pupilsGroup100 = useMemo(() => {
-    // console.log(animals);
     return animals < 5000 ? "小于5k" : "大于5k";
   }, [animals]);
   useEffect(() => {
@@ -44,20 +47,20 @@ export function Effect() {
 
   useEffect(() => {}, [animals]);
   return (
-    <ClockProvider>
-      <Center>
-        {title} pupils {animals}
-        <div>group {pupilsGroup100}</div>
-        <div>time is {state.date}</div>
-      </Center>
-    </ClockProvider>
+    <Center>
+      {title} pupils {animals}
+      <div>group {pupilsGroup100}</div>
+      <div>time is {state.date}</div>
+    </Center>
   );
 }
 
 function App() {
   return (
     <>
-      <Effect />
+      <ClockProvider>
+        <Effect />
+      </ClockProvider>
     </>
   );
 }
