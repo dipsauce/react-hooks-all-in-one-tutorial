@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState, useContext } from "react";
-import styled, { css, keyframes } from "styled-components";
+import { Center } from "./components";
+import { ClockContextType } from "./types";
 import { getDate } from "./utils";
 
-type ClockContextType = { date?: string };
 const ClockContext = React.createContext<ClockContextType>({});
 function useClock() {
   return useContext(ClockContext);
@@ -12,8 +12,6 @@ function ClockProvider({ children }: any) {
   const [state, setState] = useState({
     date,
   });
-
-  console.log("clockProvider", state);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -27,9 +25,6 @@ function ClockProvider({ children }: any) {
   );
 }
 
-const Center = styled.div({
-  textAlign: "center",
-});
 export function Effect() {
   const [title, setTitle] = useState("red yellow blue kindergarten");
   const [animals, setAnimals] = useState(0);
