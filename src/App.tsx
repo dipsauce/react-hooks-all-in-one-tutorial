@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState, useContext } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useContext,
+  useReducer,
+} from "react";
 import { Center } from "./components";
 import { ClockContextType } from "./types";
 import { getDate } from "./utils";
@@ -25,12 +31,15 @@ function ClockProvider({ children }: any) {
   );
 }
 
+enum FarmAction {
+  DoubleArea,
+}
+
 export function Effect() {
   const [title, setTitle] = useState("red yellow blue kindergarten");
   const [animals, setAnimals] = useState(0);
   const state = useClock();
 
-  console.log("state", state);
   const pupilsGroup100 = useMemo(() => {
     return animals < 5000 ? "小于5k" : "大于5k";
   }, [animals]);
@@ -46,6 +55,7 @@ export function Effect() {
       {title} pupils {animals}
       <div>group {pupilsGroup100}</div>
       <div>time is {state.date}</div>
+      <button onClick={() => {}}>double getArea</button>
     </Center>
   );
 }
