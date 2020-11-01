@@ -1,6 +1,4 @@
-import moment from "moment";
+import moment from 'moment'
 export function getDate() {
-  return moment().format("MMMM Do YYYY, h:mm:ss a");
+    return moment().format('MMMM Do YYYY, h:mm:ss a')
 }
-
- 

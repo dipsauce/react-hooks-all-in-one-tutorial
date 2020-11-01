@@ -1,1 +1,1 @@
-export type ClockContextType = { date?: string };
+export type ClockContextType = { date?: string }
